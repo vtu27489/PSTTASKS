@@ -1,0 +1,53 @@
+class Solution {
+    public int maxSubarraySumCircular(int[] nums) {
+        int total = 0;
+
+        int currentMax = nums[0];
+        int maxSum = nums[0];
+
+        int currentMin = nums[0];
+        int minSum = nums[0];
+
+        for (int i = 0; i < nums.length; i++) {
+            total += nums[i];
+
+            if (i > 0) {
+                currentMax = Math.max(nums[i], currentMax + nums[i]);
+                maxSum = Math.max(maxSum, currentMax);
+
+                currentMin = Math.min(nums[i], currentMin + nums[i]);
+                minSum = Math.min(minSum, currentMin);
+            }
+        }
+
+        // If all elements are negative
+        if (maxSum < 0) {
+            return maxSum;
+        }
+
+        // Maximum circular sum
+        return Math.max(maxSum, total - minSum);
+    }
+}
+
+
+
+output
+  case1:
+  
+  Input
+nums =
+[1,-2,3,-2]
+Output
+3
+Expected
+3
+
+case2:
+input
+nums =
+[5,-3,5]
+Output
+10
+Expected
+10
