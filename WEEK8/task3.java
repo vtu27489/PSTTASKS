@@ -1,0 +1,62 @@
+import java.io.*;
+import java.util.*;
+import java.text.*;
+import java.math.*;
+import java.util.regex.*;
+import java.lang.reflect.*;
+
+
+class Singleton{
+public String str;
+    
+    // Static variable to store the single instance of the class
+    private static Singleton instance;
+
+    // 1. Private constructor to prevent instantiation from outside the class
+    private Singleton() {
+        // Keeps constructor private
+    }
+    // 3. Static method named getSingleInstance that returns the single instance
+    public static Singleton getSingleInstance() {
+        if (instance == null) {
+            instance = new Singleton();
+        }
+        return instance;
+    }
+
+}
+
+public class Main {
+
+ public static void main(String args[])throws Exception{
+	
+	Scanner sc=new Scanner(System.in);
+	Singleton s1 = Singleton.getSingleInstance(); //retrive the single instance
+    Singleton s2=Singleton.getSingleInstance();
+    assert(s1==s2);
+    
+	//verify that the constructor is private
+	Class c=s1.getClass();
+	Constructor[] allConstructors = c.getDeclaredConstructors();
+	assert allConstructors.length==1;
+	for (Constructor ctor : allConstructors) 
+	{
+		if(ctor.getModifiers()!=2 || !ctor.toString().equals("private Singleton()")) //The constructor must be private
+		{
+			System.out.println("Wrong class!");
+		}
+	}
+    String str=sc.nextLine();
+	s1.str=str;
+    s2.str=str;
+    System.out.println("Hello I am a singleton! Let me say "+str+" to you");
+	
+ }
+
+}
+
+output
+  Input (stdin)
+hello world
+Expected Output
+Hello I am a singleton! Let me say hello world to you
